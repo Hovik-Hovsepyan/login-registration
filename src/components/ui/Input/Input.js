@@ -10,17 +10,14 @@ import {
 } from 'react-native';
 
 const Input = ({placeholder,onChangeText,secureTextEntry,inpStyle}) => {
-  
   return(
-    <View>
       <TextInput style={[styles.inputBox,inpStyle]}
                  placeholder = {placeholder}
                  placeholderTextColor = "gray"
                  onChangeText={onChangeText}
-                 secureTextEntry={secureTextEntry == "eye"} //// && avelacnelll pordzel
+                 secureTextEntry={secureTextEntry == "eye-off"} 
 
       />
-    </View>
   )
 };
 

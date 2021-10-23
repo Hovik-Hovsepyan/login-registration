@@ -38,6 +38,7 @@ const SignupFormSecond = () => {
   const [password,setPassword] = useState('');
   const [password_confirm,setPassword_confirm] = useState('');
   const [show,setShow] = useState('eye-off');
+  const [showConfirm,setShowConfirm] = useState('eye-off');
   
   const finishSignup = () => {
     const signUpData = {
@@ -76,27 +77,27 @@ const SignupFormSecond = () => {
             placeholder = "Phone"
           />
 
+          <Text>Password</Text>
           <View style={styles.passwordContainer}>
-            {/* <Text>Password</Text> */}
             <Input 
               onChangeText={password => setPassword(password)}
               placeholder = "Password"
-              secureTextEntry={show == 'eye-off' ? true : false}
+              secureTextEntry={showConfirm}
             />
             <PasswordShow 
               size={30}
               passwordShowStyle={styles.passwordShowStyle}
-              show={show}
-              setShow={setShow}
+              show={showConfirm}
+              setShow={setShowConfirm}
             />
           </View>
 
+          <Text>Password confirm</Text>
           <View style={styles.passwordContainer}>     
-            {/* <Text>Password confirm</Text> */}
             <Input 
               onChangeText={password_confirm => setPassword_confirm(password_confirm)}
               placeholder = "Confirm password"
-              secureTextEntry={show == 'eye-off' ? true : false}
+              secureTextEntry={show}
             />
             <PasswordShow 
               size={30}

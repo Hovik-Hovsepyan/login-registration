@@ -19,9 +19,14 @@ const PasswordShow = ({size,color,passwordShowStyle,show,setShow}) => {
   };
 
   return (
-    <Icon name={show} size={size} color={color} style={passwordShowStyle} onPress={showHide} />
+      <Icon
+        name={show} 
+        size={size} 
+        color={color} 
+        style={passwordShowStyle} 
+        onPress={showHide} 
+      />
   )
 };
-
 
 export default PasswordShow;
