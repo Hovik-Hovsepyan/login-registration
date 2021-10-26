@@ -18,11 +18,6 @@ export const navigationArr =
   },
 
   {
-    name: HOMEPAGE_SCREEN,
-    component: Homepage,
-  },
-
-  {
     name: SIGNUP_SCREEN,
     component: Signup,
   },
@@ -36,4 +31,18 @@ export const navigationArr =
     name: SIGNUPFORMSECOND_SCREEN,
     component: SignupFormSecond,
   }
+]
+
+export const navigationHome = 
+[
+  {
+    name: HOMEPAGE_SCREEN,
+    component: Homepage,
+  },
+
+  // {
+  //   name: SIGNUP_SCREEN,
+  //   component: Signup,
+  // },
+  
 ]

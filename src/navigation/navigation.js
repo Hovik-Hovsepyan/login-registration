@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import { navigationArr } from './navigationArr';
+import { navigationArr, navigationHome } from './navigationArr';
 
 const Stack = createStackNavigator();
 
@@ -12,7 +12,25 @@ const Stack = createStackNavigator();
           navigationArr.map((el,index) => {
             return (
               <Stack.Screen
-                key={Date.now()}
+                key={index}
+                name={el.name}
+                component={el.component} />
+            );
+          }
+          )
+        }
+      </Stack.Navigator>
+      )
+   }
+
+   export const StackNavigatorHome = () => {
+     return(
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {
+          navigationHome.map((el,index) => {
+            return (
+              <Stack.Screen
+                key={index}
                 name={el.name}
                 component={el.component} />
             );

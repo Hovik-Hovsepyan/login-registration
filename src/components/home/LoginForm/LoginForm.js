@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -7,13 +7,13 @@ import {
   StyleSheet,
   Image,
   TextInput,
+  Pressable,
 } from 'react-native';
 
 import Input from "../../ui/Input/Input";
 import AppButton from "../../ui/AppButton/AppButton";
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from "react-redux";
-import { inputDataCollector } from "../../../actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { baseUrl } from "../../../constants/constants";
 
@@ -21,6 +21,8 @@ import { HOMEPAGE_SCREEN, SIGNUP_SCREEN } from "../../../navigation/screenNames"
 import { store } from "../../../config/store";
 import { Icon } from "react-native-vector-icons/AntDesign";
 import PasswordShow from "../PasswordShow/PasswordShow";
+import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
+import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -32,21 +34,34 @@ const LoginForm = () => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  
+
   const login = () => {
     const loginData = {
       username,
       password,
     };
+    AsyncStorageService.getData('token').then((res) => {console.log(res);})
 
-    axios
-        .post(loginUrl,loginData,{})
-        .then((response) => {
-          console.log(JSON.stringify(response, undefined, 2));
-        });
-
-    navigation.navigate(HOMEPAGE_SCREEN);
+    try {
+      axios
+          .post(loginUrl,loginData,{})
+          .then((response) => {
+            if(response?.data?.status) {
+              AsyncStorageService.setData('token',response?.data?.token?.access_token)
+                .then(() => {
+                  dispatch(isUserLoggedAction(true));
+                })
+            } else {
+              alert('invalid log pass!')
+            }
+          })
+          .catch((err) => {
+            !err?.response?.data?.status ?  alert(err?.response?.data?.errors?.username) : '';  
+          })
+    } catch (error) {
+    }
   };
+
   const signUp = () => {
     navigation.navigate(SIGNUP_SCREEN);
   }
@@ -57,6 +72,7 @@ const LoginForm = () => {
         placeholder = "Email or Username"
         onChangeText={username => setUsername(username)}
       />
+      {/* <Text>sss</Text> */}
 
       <View style={styles.passwordContainer}>
         <Input

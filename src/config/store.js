@@ -1,4 +1,8 @@
-import { createStore } from 'redux'
+import { combineReducers, createStore } from 'redux'
 import { SignUpDataCollector } from '../reducers/SignUpDataCollector';
+import { UserLoggedReducer } from '../reducers/UserLoggedReducer';
 
-export const store = createStore(SignUpDataCollector);
+export const store = createStore(combineReducers({
+  SignUpDataCollector,
+  UserLoggedReducer,
+}));

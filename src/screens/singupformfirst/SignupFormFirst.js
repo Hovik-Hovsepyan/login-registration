@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SIGNUPFORMSECOND_SCREEN } from "../../navigation/screenNames";
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useDispatch } from "react-redux";
-import { inputDataCollector } from "../../actions/actions";
+import { inputDataCollector } from "../../actions/inputDataCollectorAction";
 
 const SignupFormFirst = () => {
   const dispatch = useDispatch();

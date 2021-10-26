@@ -20,18 +20,22 @@ import GoBack from "../../components/home/GoBack/GoBack";
 import axios from 'axios'
 import { store } from "../../config/store";
 import { useDispatch, useSelector } from "react-redux";
-import { inputDataCollector } from "../../actions/actions";
+// import { inputDataCollector } from "../../actions/actions";
 import { globalSelector } from "../../selectors/globalSelector";
 import { baseUrl } from "../../constants/constants";
 import PasswordShow from "../../components/home/PasswordShow/PasswordShow";
+import { UserLoggedReducer } from "../../reducers/UserLoggedReducer";
+import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
+import  AsyncStorageService  from "../../services/asyncStorage/asyncStorage";
 
 const image = {uri:"https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80"}
-const signUpUrl = `${baseUrl}/auth/login`;
+const signUpUrl = `${baseUrl}/auth/register`;
 // JSON.stringify(response, undefined, 2)
 
 const SignupFormSecond = () => {
   const navigation = useNavigation();
   const firstPageData = globalSelector();
+  const dispatch = useDispatch()
 
   const [email,setEmail] = useState('');
   const [phone,setPhone] = useState('');
@@ -42,17 +46,19 @@ const SignupFormSecond = () => {
   
   const finishSignup = () => {
     const signUpData = {
-      ...firstPageData,
+      ...firstPageData.SignUpDataCollector,
       email,
       phone,
       password,
       password_confirm
     }
-    
     axios
-        .post(signUpUrl,signUpData,{
-        }).then((response) => {
-          console.log(JSON.stringify(response, undefined, 2));
+        .post(signUpUrl,signUpData,{})
+        .then((response) => {
+          AsyncStorageService.setData('token',response?.data?.token?.access_token)
+          .then((response) => {
+            dispatch(isUserLoggedAction(true));
+          })
         });
   };
 
