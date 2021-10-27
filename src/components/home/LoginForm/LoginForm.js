@@ -23,6 +23,7 @@ import { Icon } from "react-native-vector-icons/AntDesign";
 import PasswordShow from "../PasswordShow/PasswordShow";
 import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
 import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
+import { passwordChecker } from "../../../helpers/validation";
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -31,6 +32,8 @@ const LoginForm = () => {
   const [username,setUsername] = useState();
   const [password,setPassword] = useState();
   const [show,setShow] = useState('eye-off');
+  const [errorMsg,setErrorMsg] = useState('');
+  const [passwordValidation,setPasswordValidation] = useState('');
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -40,39 +43,44 @@ const LoginForm = () => {
       username,
       password,
     };
-    AsyncStorageService.getData('token').then((res) => {console.log(res);})
 
-    try {
-      axios
-          .post(loginUrl,loginData,{})
-          .then((response) => {
-            if(response?.data?.status) {
-              AsyncStorageService.setData('token',response?.data?.token?.access_token)
-                .then(() => {
-                  dispatch(isUserLoggedAction(true));
-                })
-            } else {
-              alert('invalid log pass!')
-            }
-          })
-          .catch((err) => {
-            !err?.response?.data?.status ?  alert(err?.response?.data?.errors?.username) : '';  
-          })
-    } catch (error) {
-    }
+    setPasswordValidation(passwordChecker(password));
+
+  if(passwordChecker(password) === true) {
+      try {
+        axios
+            .post(loginUrl,loginData,{})
+            .then((response) => {
+              if(response?.data?.status) {
+                AsyncStorageService.setData('token',response?.data?.token?.access_token)
+                  .then(() => {
+                    dispatch(isUserLoggedAction(true));
+                  })
+              } else{
+                // alert('invalid log pass!')
+              }
+            })
+            .catch((err) => {
+              !err?.response?.data?.status ?  setPasswordValidation("Invalid username or password") : setPasswordValidation('');  
+            })
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
   };
 
   const signUp = () => {
     navigation.navigate(SIGNUP_SCREEN);
   }
-  
-  return(
-    <View style={styles.container}>
+
+
+    return(
+      <View style={styles.container}>
       <Input
         placeholder = "Email or Username"
         onChangeText={username => setUsername(username)}
       />
-      {/* <Text>sss</Text> */}
 
       <View style={styles.passwordContainer}>
         <Input
@@ -81,14 +89,17 @@ const LoginForm = () => {
           secureTextEntry={show}
           inpStyle={styles.inpStyle}
         />
+
         <PasswordShow 
           size={30}
           passwordShowStyle={styles.passwordShowStyle}
           show={show}
           setShow={setShow}
-        />
+          />
       </View>
-        
+
+      <Text style={styles.errMsg}>{passwordValidation}</Text>
+
       <View style={styles.btnsContainer}>
         <AppButton  
           btnText="Login"
@@ -139,6 +150,9 @@ const styles = StyleSheet.create({
     right: 40,
     color: "black",
   },
+  errMsg: {
+    color: "#ed2b2b"
+  }
 })
 
 
