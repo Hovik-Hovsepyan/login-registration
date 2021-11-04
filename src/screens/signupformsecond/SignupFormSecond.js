@@ -29,6 +29,7 @@ import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
 import  AsyncStorageService  from "../../services/asyncStorage/asyncStorage";
 import { validateEmail } from "../../services/emailValidation/emailValidation";
 import { emailChecker, emailValidation, passwordChecker, passwordConfirmChecker, passwordValidation } from "../../helpers/validation";
+import { isLoadingAction } from "../../actions/isLoadingAction";
 
 const image = {uri:"https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80"}
 const signUpUrl = `${baseUrl}/auth/register`;
@@ -64,6 +65,7 @@ const SignupFormSecond = () => {
 
     if(emailChecker(email) === true && passwordChecker(password,password_confirm) === true) {
       try {
+        dispatch(isLoadingAction(true))
         axios
           .post(signUpUrl,signUpData,{})
           .then((response) => {
@@ -71,6 +73,7 @@ const SignupFormSecond = () => {
               AsyncStorageService.setData('token',response?.data?.token?.access_token)
               .then((response) => {
                 dispatch(isUserLoggedAction(true));
+                dispatch(isLoadingAction(false))
               })
               .catch((err) => {
                 !err?.response?.data?.status ?  setPasswordConfirmValidation("Email or password is incorrect") : setPasswordConfirmValidation('');  

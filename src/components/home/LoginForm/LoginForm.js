@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 
 import Input from "../../ui/Input/Input";
@@ -24,6 +25,7 @@ import PasswordShow from "../PasswordShow/PasswordShow";
 import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
 import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
 import { passwordChecker } from "../../../helpers/validation";
+import { isLoadingAction } from "../../../actions/isLoadingAction";
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -38,7 +40,9 @@ const LoginForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+
   const login = () => {
+    
     const loginData = {
       username,
       password,
@@ -47,6 +51,7 @@ const LoginForm = () => {
     setPasswordValidation(passwordChecker(password));
 
   if(passwordChecker(password) === true) {
+    dispatch(isLoadingAction(true))
       try {
         axios
             .post(loginUrl,loginData,{})
@@ -55,6 +60,7 @@ const LoginForm = () => {
                 AsyncStorageService.setData('token',response?.data?.token?.access_token)
                   .then(() => {
                     dispatch(isUserLoggedAction(true));
+                    dispatch(isLoadingAction(false))
                   })
               } else{
                 // alert('invalid log pass!')
@@ -77,44 +83,44 @@ const LoginForm = () => {
 
     return(
       <View style={styles.container}>
-      <Input
-        placeholder = "Email or Username"
-        onChangeText={username => setUsername(username)}
-      />
-
-      <View style={styles.passwordContainer}>
         <Input
-          placeholder = "Password" 
-          onChangeText={password => setPassword(password)}
-          secureTextEntry={show}
-          inpStyle={styles.inpStyle}
+          placeholder = "Email or Username"
+          onChangeText={username => setUsername(username)}
         />
 
-        <PasswordShow 
-          size={30}
-          passwordShowStyle={styles.passwordShowStyle}
-          show={show}
-          setShow={setShow}
+        <View style={styles.passwordContainer}>
+          <Input
+            placeholder = "Password" 
+            onChangeText={password => setPassword(password)}
+            secureTextEntry={show}
+            inpStyle={styles.inpStyle}
           />
+
+          <PasswordShow 
+            size={30}
+            passwordShowStyle={styles.passwordShowStyle}
+            show={show}
+            setShow={setShow}
+            />
+        </View>
+
+        <Text style={styles.errMsg}>{passwordValidation}</Text>
+
+        <View style={styles.btnsContainer}>
+          <AppButton  
+            btnText="Login"
+            pressHandler={login}
+            btnStyle={styles.loginBtnStyle} 
+          />  
+            <Text style={styles.txt}>or</Text>  
+          <AppButton  
+            btnText="Sign up"
+            pressHandler={signUp}
+            btnStyle={styles.signupBtnStyle} 
+          />    
+
+        </View>
       </View>
-
-      <Text style={styles.errMsg}>{passwordValidation}</Text>
-
-      <View style={styles.btnsContainer}>
-        <AppButton  
-          btnText="Login"
-          pressHandler={login}
-          btnStyle={styles.loginBtnStyle} 
-        />  
-          <Text style={styles.txt}>or</Text>  
-        <AppButton  
-          btnText="Sign up"
-          pressHandler={signUp}
-          btnStyle={styles.signupBtnStyle} 
-        />    
-
-      </View>
-    </View>
   )
 };
 

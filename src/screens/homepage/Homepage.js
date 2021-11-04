@@ -14,12 +14,14 @@ import AsyncStorageService from "../../services/asyncStorage/asyncStorage";
 import { baseUrl } from "../../constants/constants";
 
 import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
+import { isLoadingAction } from "../../actions/isLoadingAction";
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
   const dispatch = useDispatch();
 
   const logOut = () => {
+    dispatch(isLoadingAction(true))
     AsyncStorageService.getData('token')
       .then((response) => {
         try {
@@ -34,6 +36,7 @@ const Homepage = () => {
                 AsyncStorageService.removeItem('token')
                   .then((response) => {
                     dispatch(isUserLoggedAction(false));
+                    dispatch(isLoadingAction(false))
               })
             })
             .catch((err) => {

@@ -11,11 +11,14 @@ import {
 } from 'react-native';
 
 import {AppNavigation} from './src/navigation/';
+import AppContainer from './src/components/home/AppContainer/AppContainer';
 
 const App = ()=> {
   return (
     <Provider store={store}>
-      <AppNavigation />
+      <AppContainer>
+        <AppNavigation />
+      </AppContainer>
     </Provider>
   );
 };
