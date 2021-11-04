@@ -12,8 +12,14 @@ import {
 
 import {AppNavigation} from './src/navigation/';
 import AppContainer from './src/components/home/AppContainer/AppContainer';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = ()=> {
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Provider store={store}>
       <AppContainer>
