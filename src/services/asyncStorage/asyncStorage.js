@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 class AsyncStorageService {
   static async setData(key,value) {
     try {
@@ -7,7 +6,7 @@ class AsyncStorageService {
     } catch (e) {
       // saving error
     }
-  }
+  };
 
   static async getData(key) {
     try {
@@ -19,7 +18,7 @@ class AsyncStorageService {
     } catch(e) {
       // error reading value
     }
-  } 
+  };
   
   static async removeItem (key){
     try {
@@ -27,7 +26,7 @@ class AsyncStorageService {
     } catch(e) {
       // remove errorr
     }
-  }
+  };
 
   static async clearData (){
     try {
@@ -35,7 +34,7 @@ class AsyncStorageService {
     } catch(e) {
       // remove error
     }
-  }
+  };
   
 } 
 

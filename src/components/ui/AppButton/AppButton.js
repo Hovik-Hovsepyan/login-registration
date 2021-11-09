@@ -1,23 +1,16 @@
 import React from "react";
 import {
-  SafeAreaView,
-  ScrollView,
   Text,
-  View,
   StyleSheet,
-  Image,
-  TextInput,
   Pressable,
-} from 'react-native';
+} from "react-native";
 
-
-const AppButton = ({pressHandler, btnStyle, btnText}) => {
-
+const AppButton = ({ pressHandler, btnStyle, btnText }) => {
   return(
     <Pressable onPress={pressHandler} style={[styles.AppBtn, btnStyle]}>
       <Text style={styles.btnTextStyle}>{btnText}</Text>
     </Pressable>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -31,9 +24,8 @@ const styles = StyleSheet.create({
   btnTextStyle: {
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: "900"
-  }
-})
-
+    fontWeight: "900",
+  },
+});
 
 export default AppButton;

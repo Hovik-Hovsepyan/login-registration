@@ -1,27 +1,25 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import React from "react";
 import {
-  SafeAreaView,
-  ScrollView,
   Text,
   View,
   StyleSheet,
-  Image,
 } from 'react-native';
-import AppButton from "../../components/ui/AppButton/AppButton";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
 import AsyncStorageService from "../../services/asyncStorage/asyncStorage";
 import { baseUrl } from "../../constants/constants";
-
 import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
 import { isLoadingAction } from "../../actions/isLoadingAction";
+
+import AppButton from "../../components/ui/AppButton/AppButton";
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
   const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch(isLoadingAction(true))
+    dispatch(isLoadingAction(true));
     AsyncStorageService.getData('token')
       .then((response) => {
         try {
@@ -43,19 +41,21 @@ const Homepage = () => {
             })
     
         } catch (error) {
+          ///err
         }
       })
-  };
+};
+
   return(
     <View style={styles.container}>
       <Text style={{color:'black'}}>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Text>
-      <AppButton  
-          btnText="Log out"
-          pressHandler={logOut}
-          btnStyle={styles.signupBtnStyle} 
+      <AppButton
+        btnText="Log out"
+        pressHandler={logOut}
+        btnStyle={styles.signupBtnStyle} 
       />
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -65,9 +65,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupBtnStyle: {
-    backgroundColor:'yellow'
-  }
-})
-
+    backgroundColor:'yellow',
+  },
+});
 
 export default Homepage;

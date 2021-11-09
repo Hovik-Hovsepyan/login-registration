@@ -4,5 +4,5 @@ export const isUserLoggedAction = (payload) => {
   return {
     type: USER_LOGGED,
     payload, 
-  }
-}
+  };
+};

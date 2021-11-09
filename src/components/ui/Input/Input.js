@@ -1,24 +1,19 @@
 import React from "react";
 import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
   StyleSheet,
-  Image,
   TextInput,
-} from 'react-native';
+} from "react-native";
 
 const Input = ({placeholder,onChangeText,secureTextEntry,inpStyle}) => {
   return(
-      <TextInput style={[styles.inputBox,inpStyle]}
-                 placeholder = {placeholder}
-                 placeholderTextColor = "gray"
-                 onChangeText={onChangeText}
-                 secureTextEntry={secureTextEntry == "eye-off"} 
-
-      />
-  )
+    <TextInput 
+      style={[styles.inputBox,inpStyle]}
+      placeholder = {placeholder}
+      placeholderTextColor = "gray"
+      onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry == "eye-off"} 
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -31,7 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, .9)',
     color: "black",
   },
-})
-
+});
 
 export default Input;

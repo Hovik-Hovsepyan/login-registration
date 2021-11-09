@@ -5,7 +5,7 @@ export const globalSelector = (param) => {
     if(param == undefined) {
       return state;
     } else {
-      return state.param
+      return state.param;
     }
   });
-}
+};

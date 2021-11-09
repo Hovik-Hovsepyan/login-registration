@@ -1,14 +1,14 @@
 import { LOGIN_SCREEN } from "./screenNames";
-import { HOMEPAGE_SCREEN } from "./screenNames";
 import { SIGNUP_SCREEN } from "./screenNames";
+import { HOMEPAGE_SCREEN } from "./screenNames";
 import { SIGNUPFORMFIRST_SCREEN } from "./screenNames";
 import { SIGNUPFORMSECOND_SCREEN } from "./screenNames";
 
 import Login from '../screens/login/Login';
-import Homepage from '../screens/homepage/Homepage';
 import Signup from '../screens/signup/Signup'
-import SignupFormSecond from '../screens/signupformsecond/SignupFormSecond';
+import Homepage from '../screens/homepage/Homepage';
 import SignupFormFirst from "../screens/singupformfirst/SignupFormFirst";
+import SignupFormSecond from '../screens/signupformsecond/SignupFormSecond';
 
 export const navigationArr = 
 [
@@ -30,8 +30,8 @@ export const navigationArr =
   {
     name: SIGNUPFORMSECOND_SCREEN,
     component: SignupFormSecond,
-  }
-]
+  },
+];
 
 export const navigationHome = 
 [
@@ -40,9 +40,4 @@ export const navigationHome =
     component: Homepage,
   },
 
-  // {
-  //   name: SIGNUP_SCREEN,
-  //   component: Signup,
-  // },
-  
-]
+];

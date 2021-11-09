@@ -1,12 +1,10 @@
 import React from "react";
 import {
-  SafeAreaView,
-  ScrollView,
   Text,
   View,
   StyleSheet,
   Image,
-} from 'react-native';
+} from "react-native";
 
 const Logo = () => {
   return(
@@ -14,7 +12,7 @@ const Logo = () => {
       <Image style={styles.logo} source={require('../../../images/logo.png')} />
       <Text style={styles.logoText}>Բարլուս Ձեզ</Text>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -31,8 +29,7 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 17,
     marginVertical: 10,
-  }
-})
-
+  },
+});
 
 export default Logo;

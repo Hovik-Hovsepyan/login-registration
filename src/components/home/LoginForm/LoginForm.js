@@ -1,48 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  SafeAreaView,
-  ScrollView,
   Text,
   View,
   StyleSheet,
-  Image,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+
+import axios from "axios";
+import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
+import { passwordChecker } from "../../../helpers/validation";
 
 import Input from "../../ui/Input/Input";
 import AppButton from "../../ui/AppButton/AppButton";
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { baseUrl } from "../../../constants/constants";
-
-import { HOMEPAGE_SCREEN, SIGNUP_SCREEN } from "../../../navigation/screenNames";
-import { store } from "../../../config/store";
-import { Icon } from "react-native-vector-icons/AntDesign";
 import PasswordShow from "../PasswordShow/PasswordShow";
-import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
-import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
-import { passwordChecker } from "../../../helpers/validation";
+import { SIGNUP_SCREEN } from "../../../navigation/screenNames";
 import { isLoadingAction } from "../../../actions/isLoadingAction";
+import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
 
 const loginUrl = `${baseUrl}/auth/login`;
 
 const LoginForm = () => {
-
   const [username,setUsername] = useState();
   const [password,setPassword] = useState();
   const [show,setShow] = useState('eye-off');
-  const [errorMsg,setErrorMsg] = useState('');
   const [passwordValidation,setPasswordValidation] = useState('');
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const login = () => {
-    
     const loginData = {
       username,
       password,
@@ -50,48 +37,46 @@ const LoginForm = () => {
 
     setPasswordValidation(passwordChecker(password));
 
-  if(passwordChecker(password) === true) {
-    dispatch(isLoadingAction(true))
-      try {
-        axios
-            .post(loginUrl,loginData,{})
-            .then((response) => {
-              if(response?.data?.status) {
-                AsyncStorageService.setData('token',response?.data?.token?.access_token)
-                  .then(() => {
-                    dispatch(isUserLoggedAction(true));
-                    dispatch(isLoadingAction(false))
-                  })
-              } else{
-                // alert('invalid log pass!')
-              }
-            })
-            .catch((err) => {
-              !err?.response?.data?.status ?  setPasswordValidation("Invalid username or password") : setPasswordValidation('');  
-            })
-      } catch (error) {
-        console.log(error);
-      }
-  }
-
+    if(passwordChecker(password) === true) {
+      dispatch(isLoadingAction(true))
+        try {
+          axios
+              .post(loginUrl, loginData, {})
+              .then((response) => {
+                if(response?.data?.status) {
+                  AsyncStorageService.setData('token', response?.data?.token?.access_token)
+                    .then(() => {
+                      dispatch(isUserLoggedAction(true));
+                      dispatch(isLoadingAction(false))
+                    })
+                } else{
+                  // alert('invalid log pass!')
+                }
+              })
+              .catch((err) => {
+                !err?.response?.data?.status ?  setPasswordValidation("Invalid username or password") : setPasswordValidation('');  
+              })
+        } catch (error) {
+          console.log(error);
+        }
+    }
   };
 
   const signUp = () => {
     navigation.navigate(SIGNUP_SCREEN);
-  }
-
+  };
 
     return(
       <View style={styles.container}>
         <Input
           placeholder = "Email or Username"
-          onChangeText={username => setUsername(username)}
+          onChangeText={setUsername}
         />
 
         <View style={styles.passwordContainer}>
           <Input
             placeholder = "Password" 
-            onChangeText={password => setPassword(password)}
+            onChangeText={setPassword}
             secureTextEntry={show}
             inpStyle={styles.inpStyle}
           />
@@ -101,7 +86,7 @@ const LoginForm = () => {
             passwordShowStyle={styles.passwordShowStyle}
             show={show}
             setShow={setShow}
-            />
+          />
         </View>
 
         <Text style={styles.errMsg}>{passwordValidation}</Text>
@@ -111,17 +96,16 @@ const LoginForm = () => {
             btnText="Login"
             pressHandler={login}
             btnStyle={styles.loginBtnStyle} 
-          />  
-            <Text style={styles.txt}>or</Text>  
+          />
+          <Text style={styles.txt}>or</Text>
           <AppButton  
             btnText="Sign up"
             pressHandler={signUp}
-            btnStyle={styles.signupBtnStyle} 
-          />    
-
+            btnStyle={styles.signupBtnStyle}
+          />
         </View>
       </View>
-  )
+  );
 };
 
 
@@ -143,12 +127,12 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontSize: 17,
-    fontWeight: "900"
+    fontWeight: "900",
   },
   passwordContainer : {
     marginLeft: 30,
     flexDirection:'row',
-    justifyContent: "center" ,
+    justifyContent: "center",
     alignItems: 'center',
   },
   passwordShowStyle: {
@@ -157,9 +141,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   errMsg: {
-    color: "#ed2b2b"
-  }
-})
-
+    color: "#ed2b2b",
+  },
+});
 
 export default LoginForm;
