@@ -29,7 +29,7 @@ const LoginForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const login = () => {
+  const login = async () => {
     const loginData = {
       username,
       password,
@@ -40,24 +40,19 @@ const LoginForm = () => {
     if(passwordChecker(password) === true) {
       dispatch(isLoadingAction(true))
         try {
-          axios
-              .post(loginUrl, loginData, {})
-              .then((response) => {
-                if(response?.data?.status) {
-                  AsyncStorageService.setData('token', response?.data?.token?.access_token)
-                    .then(() => {
-                      dispatch(isUserLoggedAction(true));
-                      dispatch(isLoadingAction(false))
-                    })
-                } else{
-                  // alert('invalid log pass!')
-                }
-              })
-              .catch((err) => {
-                !err?.response?.data?.status ?  setPasswordValidation("Invalid username or password") : setPasswordValidation('');  
-              })
-        } catch (error) {
-          console.log(error);
+          const { data } =  await axios.post(loginUrl, loginData, {});
+            if(data?.status) {
+              AsyncStorageService.setData('token', data?.token?.access_token)
+                .then(() => {
+                  dispatch(isUserLoggedAction(true));
+                  dispatch(isLoadingAction(false))
+                })
+            } else{
+              // alert('invalid log pass!')
+            }
+        } catch (err) {
+          dispatch(isLoadingAction(false));
+          !err?.response?.data?.status ? setPasswordValidation("Invalid username or password") : setPasswordValidation('');
         }
     }
   };

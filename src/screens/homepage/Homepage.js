@@ -5,12 +5,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useDispatch } from "react-redux";
+
 import axios from "axios";
+import { baseUrl } from "../../constants/constants";
 
 import AsyncStorageService from "../../services/asyncStorage/asyncStorage";
-import { baseUrl } from "../../constants/constants";
-import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
+
 import { isLoadingAction } from "../../actions/isLoadingAction";
+import { isUserLoggedAction } from "../../actions/isUserLoggedAction";
 
 import AppButton from "../../components/ui/AppButton/AppButton";
 
@@ -18,32 +20,23 @@ const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
   const dispatch = useDispatch();
 
-  const logOut = () => {
+  const logOut = async () => {
     dispatch(isLoadingAction(true));
-    AsyncStorageService.getData('token')
-      .then((response) => {
-        try {
-          axios
-            .post(logOutUrl,{},{
-              headers: {
-                "Authorization" : `Bearer ${response}`
-              }
-            })
-            .then((response) => {
-              response?.data?.status && 
-                AsyncStorageService.removeItem('token')
-                  .then((response) => {
-                    dispatch(isUserLoggedAction(false));
-                    dispatch(isLoadingAction(false))
+    const token = await AsyncStorageService.getData('token');
+      try {
+        const { data } = await axios.post(logOutUrl, {}, {headers: { "Authorization" : `Bearer ${token}` }});
+          if(data?.status) { 
+            AsyncStorageService.removeItem('token')
+              .then((response) => {
+                dispatch(isUserLoggedAction(false));
+                dispatch(isLoadingAction(false))
               })
-            })
-            .catch((err) => {
-            })
-    
-        } catch (error) {
-          ///err
-        }
-      })
+          } else {
+                ///err
+          }
+      } catch (error) {
+        ///err
+      }
 };
 
   return(

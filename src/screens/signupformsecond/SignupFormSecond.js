@@ -59,15 +59,17 @@ const SignupFormSecond = () => {
         if(data?.status) {
           await AsyncStorageService.setData('token', data?.token?.access_token);
           
-          dispatch(isUserLoggedAction(true));
           dispatch(isLoadingAction(false));
+          dispatch(isUserLoggedAction(true));
         } else {
+          dispatch(isLoadingAction(false));
           for(let error in response?.data?.errors) {
             let errMsg = `${error} is already in use `;
             setPasswordConfirmValidation(errMsg) ;
           }
         }
       } catch (error) {
+        dispatch(isLoadingAction(false));
         setPasswordConfirmValidation(!error?.response?.data?.status ? "Email or password is incorrect" : "");
       }
     }
