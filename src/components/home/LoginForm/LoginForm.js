@@ -1,35 +1,31 @@
-import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import React, {useCallback, useState} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 
-import axios from "axios";
-import AsyncStorageService from "../../../services/asyncStorage/asyncStorage";
-import { passwordChecker } from "../../../helpers/validation";
+import axios from 'axios';
+import AsyncStorageService from '../../../services/asyncStorage/asyncStorage';
+import {passwordChecker} from '../../../helpers/validation';
 
-import Input from "../../ui/Input/Input";
-import AppButton from "../../ui/AppButton/AppButton";
-import { baseUrl } from "../../../constants/constants";
-import PasswordShow from "../PasswordShow/PasswordShow";
-import { SIGNUP_SCREEN } from "../../../navigation/screenNames";
-import { isLoadingAction } from "../../../actions/isLoadingAction";
-import { isUserLoggedAction } from "../../../actions/isUserLoggedAction";
+import Input from '../../ui/Input/Input';
+import AppButton from '../../ui/AppButton/AppButton';
+import {baseUrl} from '../../../constants/constants';
+import PasswordShow from '../PasswordShow/PasswordShow';
+import {SIGNUP_SCREEN} from '../../../navigation/screenNames';
+import {isLoadingAction} from '../../../actions/isLoadingAction';
+import {isUserLoggedAction} from '../../../actions/isUserLoggedAction';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
 const LoginForm = () => {
-  const [username,setUsername] = useState();
-  const [password,setPassword] = useState();
-  const [show,setShow] = useState('eye-off');
-  const [passwordValidation,setPasswordValidation] = useState('');
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [show, setShow] = useState('eye-off');
+  const [passwordValidation, setPasswordValidation] = useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const login = async () => {
+  const login = useCallback(async () => {
     const loginData = {
       username,
       password,
@@ -37,72 +33,71 @@ const LoginForm = () => {
 
     setPasswordValidation(passwordChecker(password));
 
-    if(passwordChecker(password) === true) {
-      dispatch(isLoadingAction(true))
-        try {
-          const { data } =  await axios.post(loginUrl, loginData, {});
-            if(data?.status) {
-              AsyncStorageService.setData('token', data?.token?.access_token)
-                .then(() => {
-                  dispatch(isUserLoggedAction(true));
-                  dispatch(isLoadingAction(false))
-                })
-            } else{
-              // alert('invalid log pass!')
-            }
-        } catch (err) {
-          dispatch(isLoadingAction(false));
-          !err?.response?.data?.status ? setPasswordValidation("Invalid username or password") : setPasswordValidation('');
+    if (passwordChecker(password) === true) {
+      dispatch(isLoadingAction(true));
+      try {
+        const {data} = await axios.post(loginUrl, loginData, {});
+        if (data?.status) {
+          AsyncStorageService.setData('token', data?.token?.access_token).then(
+            () => {
+              dispatch(isUserLoggedAction(true));
+              dispatch(isLoadingAction(false));
+            },
+          );
+        } else {
+          // alert('invalid log pass!')
         }
+      } catch (err) {
+        dispatch(isLoadingAction(false));
+        !err?.response?.data?.status
+          ? setPasswordValidation('Invalid username or password')
+          : setPasswordValidation('');
+      }
     }
-  };
+  }, [dispatch, password, username]);
 
-  const signUp = () => {
+  const signUp = useCallback(() => {
     navigation.navigate(SIGNUP_SCREEN);
-  };
+  }, [navigation]);
 
-    return(
-      <View style={styles.container}>
+  return (
+    <View style={styles.container}>
+      <Input placeholder="Email or Username" onChangeText={setUsername} />
+
+      <View style={styles.passwordContainer}>
         <Input
-          placeholder = "Email or Username"
-          onChangeText={setUsername}
+          placeholder="Password"
+          onChangeText={setPassword}
+          secureTextEntry={show}
+          inpStyle={styles.inpStyle}
         />
 
-        <View style={styles.passwordContainer}>
-          <Input
-            placeholder = "Password" 
-            onChangeText={setPassword}
-            secureTextEntry={show}
-            inpStyle={styles.inpStyle}
-          />
-
-          <PasswordShow 
-            size={30}
-            passwordShowStyle={styles.passwordShowStyle}
-            show={show}
-            setShow={setShow}
-          />
-        </View>
-
-        <Text style={styles.errMsg}>{passwordValidation}</Text>
-
-        <View style={styles.btnsContainer}>
-          <AppButton  
-            btnText="Login"
-            pressHandler={login}
-            btnStyle={styles.loginBtnStyle} 
-          />
-          <Text style={styles.txt}>or</Text>
-          <AppButton  
-            btnText="Sign up"
-            pressHandler={signUp}
-            btnStyle={styles.signupBtnStyle}
-          />
-        </View>
+        <PasswordShow
+          size={30}
+          passwordShowStyle={styles.passwordShowStyle}
+          show={show}
+          setShow={setShow}
+        />
       </View>
+
+      <Text style={styles.errMsg}>{passwordValidation}</Text>
+
+      <View style={styles.btnsContainer}>
+        <AppButton
+          btnText="Login"
+          pressHandler={login}
+          btnStyle={styles.loginBtnStyle}
+        />
+        <Text style={styles.txt}>or</Text>
+        <AppButton
+          btnText="Sign up"
+          pressHandler={signUp}
+          btnStyle={styles.signupBtnStyle}
+        />
+      </View>
+    </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -111,32 +106,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnsContainer: {
-    flexDirection: "row",
-    alignItems:"center",
-  },  
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   loginBtnStyle: {
-    backgroundColor: "#34a7c7",
+    backgroundColor: '#34a7c7',
   },
   signupBtnStyle: {
-    backgroundColor:'#153e9f',
+    backgroundColor: '#153e9f',
   },
   txt: {
     fontSize: 17,
-    fontWeight: "900",
+    fontWeight: '900',
   },
-  passwordContainer : {
+  passwordContainer: {
     marginLeft: 30,
-    flexDirection:'row',
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   passwordShowStyle: {
-    position:"relative",
+    position: 'relative',
     right: 40,
-    color: "black",
+    color: 'black',
   },
   errMsg: {
-    color: "#ed2b2b",
+    color: '#ed2b2b',
   },
 });
 

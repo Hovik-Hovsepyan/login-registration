@@ -1,19 +1,17 @@
-import React from "react";
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-} from "react-native";
+import React from 'react';
+import {View, StyleSheet, ImageBackground} from 'react-native';
 
-import LoginForm from "../../components/home/LoginForm/LoginForm";
-import Logo from "../../components/home/Logo/Logo";
+import LoginForm from '../../components/home/LoginForm/LoginForm';
+import Logo from '../../components/home/Logo/Logo';
 
-const image = {uri:"https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80"};
+const image = {
+  uri: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80',
+};
 
 const Login = () => {
-  return(
+  return (
     <View style={styles.loginContainer}>
-      <ImageBackground style = {styles.loginBackground} source={image} >
+      <ImageBackground style={styles.loginBackground} source={image}>
         <Logo />
         <LoginForm />
       </ImageBackground>
@@ -23,8 +21,8 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   loginContainer: {
-    flex:1,
-    backgroundColor: "black",
+    flex: 1,
+    backgroundColor: 'black',
   },
   loginBackground: {
     flex: 1,

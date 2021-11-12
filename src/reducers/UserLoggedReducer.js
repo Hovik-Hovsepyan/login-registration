@@ -1,11 +1,11 @@
-import { USER_LOGGED } from "../actions/actionTypes";
+import {USER_LOGGED} from '../actions/actionTypes';
 
 const initialState = {
   isUserLogged: false,
 };
 
-export const UserLoggedReducer = (state = initialState, { type, payload }) => {
-  switch(type) {
+export const UserLoggedReducer = (state = initialState, {type, payload}) => {
+  switch (type) {
     case USER_LOGGED: {
       return {
         ...state,
@@ -14,6 +14,6 @@ export const UserLoggedReducer = (state = initialState, { type, payload }) => {
     }
     default: {
       return state;
-    };
+    }
   }
 };

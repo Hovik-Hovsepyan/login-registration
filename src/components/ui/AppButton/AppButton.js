@@ -1,12 +1,8 @@
-import React from "react";
-import {
-  Text,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import React from 'react';
+import {Text, StyleSheet, Pressable} from 'react-native';
 
-const AppButton = ({ pressHandler, btnStyle, btnText }) => {
-  return(
+const AppButton = ({pressHandler, btnStyle, btnText}) => {
+  return (
     <Pressable onPress={pressHandler} style={[styles.AppBtn, btnStyle]}>
       <Text style={styles.btnTextStyle}>{btnText}</Text>
     </Pressable>
@@ -24,7 +20,7 @@ const styles = StyleSheet.create({
   btnTextStyle: {
     fontSize: 16,
     textAlign: 'center',
-    fontWeight: "900",
+    fontWeight: '900',
   },
 });
 

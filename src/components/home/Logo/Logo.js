@@ -1,13 +1,8 @@
-import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-} from "react-native";
+import React from 'react';
+import {Text, View, StyleSheet, Image} from 'react-native';
 
 const Logo = () => {
-  return(
+  return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../../../images/logo.png')} />
       <Text style={styles.logoText}>Բարլուս Ձեզ</Text>

@@ -1,15 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { useSelector } from "react-redux";
+import React from 'react';
+import {View} from 'react-native';
+import {useSelector} from 'react-redux';
 
-import Overlay from "../../ui/Overlay/Overlay";
+import Overlay from '../../ui/Overlay/Overlay';
 
-export default AppContainer = ({ children }) => {
+const AppContainer = ({children}) => {
   const isLoading = useSelector(state => state);
-  return(
+  return (
     <View style={{flex: 1}}>
       {children}
-      {isLoading.IsLoadingReducer && <Overlay size='large' />}
+      {isLoading.IsLoadingReducer && <Overlay size="large" />}
     </View>
   );
 };
+export default AppContainer;

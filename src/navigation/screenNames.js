@@ -1,5 +1,5 @@
-export const LOGIN_SCREEN = "Login";
-export const HOMEPAGE_SCREEN = "Homepage";
-export const SIGNUP_SCREEN = "Signup";
-export const SIGNUPFORMFIRST_SCREEN = "SignupFormFirst";
-export const SIGNUPFORMSECOND_SCREEN = "SignupFormSecond";
+export const LOGIN_SCREEN = 'LOGIN_SCREEN';
+export const HOMEPAGE_SCREEN = 'HOMEPAGE_SCREEN';
+export const SIGNUP_SCREEN = 'SIGNUP_SCREEN';
+export const SIGNUPFORMFIRST_SCREEN = 'SIGNUPFORMFIRST_SCREEN';
+export const SIGNUPFORMSECOND_SCREEN = 'SIGNUPFORMSECOND_SCREEN';
