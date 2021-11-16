@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const GoBack = ({size, color, backBtn}) => {
   const navigation = useNavigation();
+
   return (
     <View>
       <Icon

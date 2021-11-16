@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import {TextInput} from 'react-native';
+import FlexHelpers from 'react-native-flex-helper';
 
 const Input = ({placeholder, onChangeText, secureTextEntry, inpStyle}) => {
   return (
@@ -13,7 +14,7 @@ const Input = ({placeholder, onChangeText, secureTextEntry, inpStyle}) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = FlexHelpers.create({
   inputBox: {
     width: 300,
     paddingVertical: 10,

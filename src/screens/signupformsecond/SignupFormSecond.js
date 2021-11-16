@@ -1,11 +1,11 @@
 import React, {useCallback, useState} from 'react';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import axios from 'axios';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
 
-import {baseUrl} from '../../constants/constants';
+import {backgroundImage, baseUrl} from '../../constants/constants';
 
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
@@ -17,18 +17,17 @@ import {
 } from '../../helpers/validation';
 
 import Input from '../../components/ui/Input/Input';
-import GoBack from '../../components/home/GoBack/GoBack';
+import GoBack from '../../components/GoBack/GoBack';
 import AppButton from '../../components/ui/AppButton/AppButton';
-import PasswordShow from '../../components/home/PasswordShow/PasswordShow';
+import PasswordShow from '../../components/PasswordShow/PasswordShow';
+import FlexHelpers from 'react-native-flex-helper';
 
-const image = {
-  uri: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80',
-};
 const signUpUrl = `${baseUrl}/auth/register`;
 
 const SignupFormSecond = () => {
   const firstPageData = useSelector(state => state.SignUpDataCollector);
   const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -78,10 +77,10 @@ const SignupFormSecond = () => {
   }, [dispatch, email, firstPageData, password, password_confirm, phone]);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.signupBackground} source={image}>
+    <View style={styles.fill}>
+      <ImageBackground style={styles.fill} source={{uri: backgroundImage}}>
         <GoBack size={30} color="white" backBtn={styles.backBtn} />
-        <View style={styles.fields}>
+        <View style={styles.fillCenter}>
           <Text>Email</Text>
           <Input onChangeText={setEmail} placeholder="Email" />
           <Text style={styles.errMsg}>{emailValidation}</Text>
@@ -90,7 +89,7 @@ const SignupFormSecond = () => {
           <Input onChangeText={setPhone} placeholder="Phone" />
 
           <Text>Password</Text>
-          <View style={styles.passwordContainer}>
+          <View style={[styles.rowCenter, styles.passwordContainer]}>
             <Input
               onChangeText={setPassword}
               placeholder="Password"
@@ -106,7 +105,7 @@ const SignupFormSecond = () => {
           <Text style={styles.errMsg}>{passwordValidation}</Text>
 
           <Text>Password confirm</Text>
-          <View style={styles.passwordContainer}>
+          <View style={[styles.rowCenter, styles.passwordContainer]}>
             <Input
               onChangeText={setPassword_confirm}
               placeholder="Confirm password"
@@ -114,7 +113,7 @@ const SignupFormSecond = () => {
             />
             <PasswordShow
               size={30}
-              passwordShowStyle={styles.passwordShowStyle}
+              passwordShowStyle={[styles.relative, styles.passwordShowStyle]}
               show={show}
               setShow={setShow}
             />
@@ -133,18 +132,7 @@ const SignupFormSecond = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  fields: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  signupBackground: {
-    flex: 1,
-  },
+const styles = FlexHelpers.create({
   btnStyle: {
     backgroundColor: '#153e9f',
   },
@@ -153,12 +141,8 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     marginLeft: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   passwordShowStyle: {
-    position: 'relative',
     right: 40,
     color: 'black',
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import axios from 'axios';
@@ -11,6 +11,7 @@ import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
 
 import AppButton from '../../components/ui/AppButton/AppButton';
+import FlexHelpers from 'react-native-flex-helper';
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
@@ -40,8 +41,8 @@ const Homepage = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={{color: 'black'}}>
+    <View style={styles.fillCenter}>
+      <Text style={styles.txtStyle}>
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       </Text>
       <AppButton
@@ -53,14 +54,12 @@ const Homepage = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const styles = FlexHelpers.create({
   signupBtnStyle: {
     backgroundColor: 'yellow',
+  },
+  txtStyle: {
+    color: 'black',
   },
 });
 

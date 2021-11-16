@@ -1,5 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 class AsyncStorageService {
+  // static setToken(key, value) {
+  //   super.setData(key, value);
+  // }
   static async setData(key, value) {
     try {
       await AsyncStorage.setItem(key, value);

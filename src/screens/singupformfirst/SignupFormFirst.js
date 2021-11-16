@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
@@ -8,10 +8,12 @@ import AppButton from '../../components/ui/AppButton/AppButton';
 
 import {SIGNUPFORMSECOND_SCREEN} from '../../navigation/screenNames';
 import {inputDataCollector} from '../../actions/inputDataCollectorAction';
+import FlexHelpers from 'react-native-flex-helper';
 
 const SignupFormFirst = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [username, setUsername] = useState('');
@@ -38,7 +40,7 @@ const SignupFormFirst = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.fillCenter}>
       <Text>First name</Text>
       <Input placeholder="First name" onChangeText={setName} />
 
@@ -58,12 +60,7 @@ const SignupFormFirst = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const styles = FlexHelpers.create({
   btnStyle: {
     backgroundColor: '#34a7c7',
   },

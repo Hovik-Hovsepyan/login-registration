@@ -1,12 +1,4 @@
 import {combineReducers, createStore} from 'redux';
-import {SignUpDataCollector} from '../reducers/SignUpDataCollector';
-import {UserLoggedReducer} from '../reducers/UserLoggedReducer';
-import {IsLoadingReducer} from '../reducers/IsLoadingReducer';
+import {combinedReducers} from '../reducers';
 
-export const store = createStore(
-  combineReducers({
-    SignUpDataCollector,
-    UserLoggedReducer,
-    IsLoadingReducer,
-  }),
-);
+export const store = createStore(combineReducers(combinedReducers));

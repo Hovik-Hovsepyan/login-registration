@@ -1,23 +1,21 @@
 import React from 'react';
-import {ActivityIndicator, View, StyleSheet, Dimensions} from 'react-native';
+import {ActivityIndicator, Dimensions, View} from 'react-native';
+import FlexHelpers from 'react-native-flex-helper';
 
 const {width, height} = Dimensions.get('window');
 
 const Overlay = ({size}) => {
   return (
-    <View style={styles.overlayContainer}>
+    <View style={[styles.center, styles.absolute, styles.overlayContainer]}>
       <ActivityIndicator size={size} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = FlexHelpers.create({
   overlayContainer: {
     width,
     height,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,.7)',
   },
 });

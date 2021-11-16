@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable} from 'react-native';
+import {Pressable, Text} from 'react-native';
+import FlexHelpers from 'react-native-flex-helper';
 
 const AppButton = ({pressHandler, btnStyle, btnText}) => {
   return (
@@ -9,7 +10,7 @@ const AppButton = ({pressHandler, btnStyle, btnText}) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = FlexHelpers.create({
   AppBtn: {
     width: 120,
     marginHorizontal: 15,

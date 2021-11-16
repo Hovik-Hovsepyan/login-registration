@@ -5,7 +5,7 @@ import {store} from './src/config/store';
 
 import {AppNavigation} from './src/navigation/';
 
-import AppContainer from './src/components/home/AppContainer/AppContainer';
+import AppContainer from './src/components/AppContainer/AppContainer';
 
 const App = () => {
   useEffect(() => {

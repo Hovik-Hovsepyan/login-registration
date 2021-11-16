@@ -1,17 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, ImageBackground} from 'react-native';
+import {ImageBackground, View} from 'react-native';
 
 import SignupFormFirst from '../singupformfirst/SignupFormFirst';
-import GoBack from '../../components/home/GoBack/GoBack';
-
-const image = {
-  uri: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjF8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80',
-};
+import GoBack from '../../components/GoBack/GoBack';
+import {backgroundImage} from '../../constants/constants';
+import FlexHelpers from 'react-native-flex-helper';
 
 const SingUp = () => {
   return (
-    <View style={styles.signupContainer}>
-      <ImageBackground style={styles.signupBackground} source={image}>
+    <View style={styles.fill}>
+      <ImageBackground style={styles.fill} source={{uri: backgroundImage}}>
         <GoBack size={30} color="white" backBtn={styles.backBtn} />
         <SignupFormFirst />
       </ImageBackground>
@@ -19,13 +17,9 @@ const SingUp = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = FlexHelpers.create({
   signupContainer: {
-    flex: 1,
     backgroundColor: 'black',
-  },
-  signupBackground: {
-    flex: 1,
   },
   leftBtn: {
     padding: 15,

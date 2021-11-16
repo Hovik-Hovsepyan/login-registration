@@ -1,36 +1,37 @@
 import React, {useCallback, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import axios from 'axios';
-import AsyncStorageService from '../../../services/asyncStorage/asyncStorage';
-import {passwordChecker} from '../../../helpers/validation';
+import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
+import {passwordChecker} from '../../helpers/validation';
 
-import Input from '../../ui/Input/Input';
-import AppButton from '../../ui/AppButton/AppButton';
-import {baseUrl} from '../../../constants/constants';
+import Input from '../ui/Input/Input';
+import AppButton from '../ui/AppButton/AppButton';
+import {baseUrl} from '../../constants/constants';
 import PasswordShow from '../PasswordShow/PasswordShow';
-import {SIGNUP_SCREEN} from '../../../navigation/screenNames';
-import {isLoadingAction} from '../../../actions/isLoadingAction';
-import {isUserLoggedAction} from '../../../actions/isUserLoggedAction';
+import {SIGNUP_SCREEN} from '../../navigation/screenNames';
+import {isLoadingAction} from '../../actions/isLoadingAction';
+import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
+import FlexHelpers from 'react-native-flex-helper';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [show, setShow] = useState('eye-off');
   const [passwordValidation, setPasswordValidation] = useState('');
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const login = useCallback(async () => {
     const loginData = {
       username,
       password,
     };
-
     setPasswordValidation(passwordChecker(password));
 
     if (passwordChecker(password) === true) {
@@ -61,10 +62,10 @@ const LoginForm = () => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.fillCenter}>
       <Input placeholder="Email or Username" onChangeText={setUsername} />
 
-      <View style={styles.passwordContainer}>
+      <View style={[styles.rowCenter, styles.passwordContainer]}>
         <Input
           placeholder="Password"
           onChangeText={setPassword}
@@ -74,7 +75,7 @@ const LoginForm = () => {
 
         <PasswordShow
           size={30}
-          passwordShowStyle={styles.passwordShowStyle}
+          passwordShowStyle={[styles.relative, styles.passwordShowStyle]}
           show={show}
           setShow={setShow}
         />
@@ -82,7 +83,7 @@ const LoginForm = () => {
 
       <Text style={styles.errMsg}>{passwordValidation}</Text>
 
-      <View style={styles.btnsContainer}>
+      <View style={styles.rowCross}>
         <AppButton
           btnText="Login"
           pressHandler={login}
@@ -99,16 +100,7 @@ const LoginForm = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+const styles = FlexHelpers.create({
   loginBtnStyle: {
     backgroundColor: '#34a7c7',
   },
@@ -121,12 +113,8 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     marginLeft: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   passwordShowStyle: {
-    position: 'relative',
     right: 40,
     color: 'black',
   },
