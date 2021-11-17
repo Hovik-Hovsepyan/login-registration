@@ -1,11 +1,13 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {ImageBackground, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import FlexHelpers from 'react-native-flex-helper';
 
 import axios from 'axios';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
 
 import {backgroundImage, baseUrl} from '../../constants/constants';
+import {Colors} from '../../styles';
 
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
@@ -20,8 +22,6 @@ import Input from '../../components/ui/Input/Input';
 import GoBack from '../../components/ui/GoBack/GoBack';
 import AppButton from '../../components/ui/AppButton/AppButton';
 import PasswordShow from '../../components/ui/Input/PasswordShow/PasswordShow';
-import FlexHelpers from 'react-native-flex-helper';
-import {Colors} from '../../styles';
 
 const signUpUrl = `${baseUrl}/auth/register`;
 
@@ -29,10 +29,11 @@ const SignupFormSecond = () => {
   const firstPageData = useSelector(state => state.SignUpDataCollector);
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [password_confirm, setPassword_confirm] = useState('');
+  const emailRef = useRef('');
+  const phoneRef = useRef('');
+  const passwordRef = useRef('');
+  const password_confirmRef = useRef('');
+
   const [show, setShow] = useState('eye-off');
   const [showConfirm, setShowConfirm] = useState('eye-off');
   const [emailValidation, setEmailValidation] = useState('');
@@ -43,22 +44,25 @@ const SignupFormSecond = () => {
   const finishSignup = useCallback(async () => {
     const signUpData = {
       ...firstPageData,
-      email,
-      phone,
-      password,
-      password_confirm,
+      email: emailRef.current,
+      phone: phoneRef.current,
+      password: passwordRef.current,
+      password_confirm: password_confirmRef.current,
     };
 
-    setEmailValidation(emailChecker(email));
-    setPasswordValidation(passwordChecker(password));
+    setEmailValidation(emailChecker(emailRef.current));
+    setPasswordValidation(passwordChecker(passwordRef.current));
     setPasswordsMatchValidation(
-      passwordsMatchChecker(password, password_confirm),
+      passwordsMatchChecker(passwordRef.current, password_confirmRef.current),
     );
 
     if (
-      emailChecker(email) === true &&
-      passwordChecker(password) === true &&
-      passwordsMatchChecker(password, password_confirm) === true
+      emailChecker(emailRef.current) === true &&
+      passwordChecker(passwordRef.current) === true &&
+      passwordsMatchChecker(
+        passwordRef.current,
+        password_confirmRef.current,
+      ) === true
     ) {
       try {
         dispatch(isLoadingAction(true));
@@ -75,7 +79,14 @@ const SignupFormSecond = () => {
         dispatch(isLoadingAction(false));
       }
     }
-  }, [dispatch, email, firstPageData, password, password_confirm, phone]);
+  }, [
+    dispatch,
+    emailRef,
+    firstPageData,
+    passwordRef,
+    password_confirmRef,
+    phoneRef,
+  ]);
 
   return (
     <View style={styles.fill}>
@@ -83,16 +94,16 @@ const SignupFormSecond = () => {
         <GoBack size={30} color={Colors.white} backBtn={styles.backBtn} />
         <View style={styles.fillCenter}>
           <Text>Email</Text>
-          <Input onChangeText={setEmail} placeholder="Email" />
+          <Input changeRef={emailRef} placeholder="Email" />
           <Text style={styles.errMsg}>{emailValidation}</Text>
 
           <Text>Phone</Text>
-          <Input onChangeText={setPhone} placeholder="Phone" />
+          <Input changeRef={phoneRef} placeholder="Phone" />
 
           <Text>Password</Text>
           <View style={[styles.rowCenter, styles.passwordContainer]}>
             <Input
-              onChangeText={setPassword}
+              changeRef={passwordRef}
               placeholder="Password"
               secureTextEntry={showConfirm}
             />
@@ -108,7 +119,7 @@ const SignupFormSecond = () => {
           <Text>Password confirm</Text>
           <View style={[styles.rowCenter, styles.passwordContainer]}>
             <Input
-              onChangeText={setPassword_confirm}
+              changeRef={password_confirmRef}
               placeholder="Confirm password"
               secureTextEntry={show}
             />

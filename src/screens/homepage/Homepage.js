@@ -1,18 +1,17 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';
+import FlexHelpers from 'react-native-flex-helper';
 
 import axios from 'axios';
 import {baseUrl} from '../../constants/constants';
-
+import {Colors} from '../../styles';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
 
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
 
 import AppButton from '../../components/ui/AppButton/AppButton';
-import FlexHelpers from 'react-native-flex-helper';
-import {Colors} from '../../styles';
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;

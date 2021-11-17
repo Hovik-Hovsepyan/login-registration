@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextInput} from 'react-native';
 import FlexHelpers from 'react-native-flex-helper';
+
 import {Colors} from '../../../styles';
 
-const Input = ({placeholder, onChangeText, secureTextEntry, inpStyle}) => {
+const Input = ({placeholder, secureTextEntry, inpStyle, changeRef}) => {
+  const [value, setValue] = useState('');
+  const inputChange = val => {
+    setValue(val);
+    changeRef.current = val;
+  };
+
   return (
     <TextInput
+      value={value}
       style={[styles.inputBox, inpStyle]}
       placeholder={placeholder}
       placeholderTextColor={Colors.gray}
-      onChangeText={onChangeText}
+      onChangeText={inputChange}
       secureTextEntry={secureTextEntry === 'eye-off'}
     />
   );

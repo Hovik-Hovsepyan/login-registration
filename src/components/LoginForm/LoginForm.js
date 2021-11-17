@@ -1,12 +1,14 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+import FlexHelpers from 'react-native-flex-helper';
 
 import axios from 'axios';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
-import {passwordChecker} from '../../helpers/validation';
+import {Colors} from '../../styles';
 
+import {passwordChecker} from '../../helpers/validation';
 import Input from '../ui/Input/Input';
 import AppButton from '../ui/AppButton/AppButton';
 import {baseUrl} from '../../constants/constants';
@@ -14,8 +16,6 @@ import PasswordShow from '../ui/Input/PasswordShow/PasswordShow';
 import {SIGNUP_SCREEN} from '../../navigation/screenNames';
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
-import FlexHelpers from 'react-native-flex-helper';
-import {Colors} from '../../styles';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -23,19 +23,19 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const usernameRef = useRef('');
+  const passwordRef = useRef('');
   const [show, setShow] = useState('eye-off');
   const [passwordValidation, setPasswordValidation] = useState('');
 
   const login = useCallback(async () => {
     const loginData = {
-      username,
-      password,
+      username: usernameRef.current,
+      password: passwordRef.current,
     };
-    setPasswordValidation(passwordChecker(password));
+    setPasswordValidation(passwordChecker(passwordRef.current));
 
-    if (passwordChecker(password) === true) {
+    if (passwordChecker(passwordRef.current) === true) {
       dispatch(isLoadingAction(true));
       try {
         const {data} = await axios.post(loginUrl, loginData, {});
@@ -54,7 +54,7 @@ const LoginForm = () => {
           : setPasswordValidation('');
       }
     }
-  }, [dispatch, password, username]);
+  }, [dispatch, usernameRef]);
 
   const signUp = useCallback(() => {
     navigation.navigate(SIGNUP_SCREEN);
@@ -62,12 +62,12 @@ const LoginForm = () => {
 
   return (
     <View style={styles.fillCenter}>
-      <Input placeholder="Email or Username" onChangeText={setUsername} />
+      <Input placeholder="Email or Username" changeRef={usernameRef} />
 
       <View style={[styles.rowCenter, styles.passwordContainer]}>
         <Input
           placeholder="Password"
-          onChangeText={setPassword}
+          changeRef={passwordRef}
           secureTextEntry={show}
           inpStyle={styles.inpStyle}
         />
