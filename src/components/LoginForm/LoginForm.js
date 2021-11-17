@@ -10,7 +10,7 @@ import {passwordChecker} from '../../helpers/validation';
 import Input from '../ui/Input/Input';
 import AppButton from '../ui/AppButton/AppButton';
 import {baseUrl} from '../../constants/constants';
-import PasswordShow from '../PasswordShow/PasswordShow';
+import PasswordShow from '../ui/Input/PasswordShow/PasswordShow';
 import {SIGNUP_SCREEN} from '../../navigation/screenNames';
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';

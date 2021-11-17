@@ -17,9 +17,9 @@ import {
 } from '../../helpers/validation';
 
 import Input from '../../components/ui/Input/Input';
-import GoBack from '../../components/GoBack/GoBack';
+import GoBack from '../../components/ui/GoBack/GoBack';
 import AppButton from '../../components/ui/AppButton/AppButton';
-import PasswordShow from '../../components/PasswordShow/PasswordShow';
+import PasswordShow from '../../components/ui/Input/PasswordShow/PasswordShow';
 import FlexHelpers from 'react-native-flex-helper';
 import {Colors} from '../../styles';
 

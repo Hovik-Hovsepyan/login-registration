@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import FlexHelpers from 'react-native-flex-helper';
 import {useSelector} from 'react-redux';
 
-import Overlay from '../ui/Overlay/Overlay';
+import Overlay from '../Overlay/Overlay';
 
 const AppContainer = ({children}) => {
   const isLoading = useSelector(state => state);
