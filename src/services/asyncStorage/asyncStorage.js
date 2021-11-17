@@ -1,43 +1,16 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import MainAsyncStorageService from './mainStorageService';
 
-class AsyncStorageService {
-  // static setToken(key, value) {
-  //   super.setData(key, value);
-  // }
-  static async setData(key, value) {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (e) {
-      // saving error
-    }
+class AsyncStorageService extends MainAsyncStorageService {
+  static setToken(token) {
+    return super.setData('token', token);
   }
 
-  static async getData(key) {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        return value;
-        // value previously stored
-      }
-    } catch (e) {
-      // error reading value
-    }
+  static getToken() {
+    return super.getData('token');
   }
 
-  static async removeItem(key) {
-    try {
-      await AsyncStorage.removeItem(key);
-    } catch (e) {
-      // remove errorr
-    }
-  }
-
-  static async clearData() {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // remove error
-    }
+  static removeToken() {
+    return super.removeItem('token');
   }
 }
 

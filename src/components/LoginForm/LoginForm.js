@@ -39,12 +39,10 @@ const LoginForm = () => {
       try {
         const {data} = await axios.post(loginUrl, loginData, {});
         if (data?.status) {
-          AsyncStorageService.setData('token', data?.token?.access_token).then(
-            () => {
-              dispatch(isUserLoggedAction(true));
-              dispatch(isLoadingAction(false));
-            },
-          );
+          AsyncStorageService.setToken(data?.token?.access_token).then(() => {
+            dispatch(isUserLoggedAction(true));
+            dispatch(isLoadingAction(false));
+          });
         } else {
           // alert('invalid log pass!')
         }

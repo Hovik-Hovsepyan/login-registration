@@ -13,7 +13,7 @@ export const AppNavigation = () => {
   const isLogged = useSelector(state => state.UserLoggedReducer.isUserLogged);
 
   useEffect(() => {
-    AsyncStorageService.getData('token').then(token => {
+    AsyncStorageService.getToken().then(token => {
       if (token) {
         dispatch(isUserLoggedAction(true));
       }

@@ -19,15 +19,15 @@ const Homepage = () => {
 
   const logOut = async () => {
     dispatch(isLoadingAction(true));
-    const token = await AsyncStorageService.getData('token');
     try {
+      const token = await AsyncStorageService.getToken();
       const {data} = await axios.post(
         logOutUrl,
         {},
         {headers: {Authorization: `Bearer ${token}`}},
       );
       if (data?.status) {
-        AsyncStorageService.removeItem('token').then(() => {
+        AsyncStorageService.removeToken().then(() => {
           dispatch(isUserLoggedAction(false));
           dispatch(isLoadingAction(false));
         });

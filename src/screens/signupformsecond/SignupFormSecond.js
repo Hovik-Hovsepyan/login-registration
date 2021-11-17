@@ -63,7 +63,7 @@ const SignupFormSecond = () => {
         dispatch(isLoadingAction(true));
         const {data} = await axios.post(signUpUrl, signUpData, {});
         if (data?.status) {
-          await AsyncStorageService.setData('token', data?.token?.access_token);
+          await AsyncStorageService.setToken(data?.token?.access_token);
           dispatch(isLoadingAction(false));
           dispatch(isUserLoggedAction(true));
         } else {
