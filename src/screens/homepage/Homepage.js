@@ -12,6 +12,7 @@ import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
 
 import AppButton from '../../components/ui/AppButton/AppButton';
 import FlexHelpers from 'react-native-flex-helper';
+import {Colors} from '../../styles';
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
@@ -56,10 +57,10 @@ const Homepage = () => {
 
 const styles = FlexHelpers.create({
   signupBtnStyle: {
-    backgroundColor: 'yellow',
+    backgroundColor: Colors.yellow,
   },
   txtStyle: {
-    color: 'black',
+    color: Colors.black,
   },
 });
 

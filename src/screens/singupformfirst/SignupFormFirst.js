@@ -9,6 +9,7 @@ import AppButton from '../../components/ui/AppButton/AppButton';
 import {SIGNUPFORMSECOND_SCREEN} from '../../navigation/screenNames';
 import {inputDataCollector} from '../../actions/inputDataCollectorAction';
 import FlexHelpers from 'react-native-flex-helper';
+import {Colors} from '../../styles';
 
 const SignupFormFirst = () => {
   const dispatch = useDispatch();
@@ -62,10 +63,10 @@ const SignupFormFirst = () => {
 
 const styles = FlexHelpers.create({
   btnStyle: {
-    backgroundColor: '#34a7c7',
+    backgroundColor: Colors.lightBlue,
   },
   errMsg: {
-    color: '#ed2b2b',
+    color: Colors.red,
   },
 });
 

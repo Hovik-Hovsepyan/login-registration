@@ -15,6 +15,7 @@ import {SIGNUP_SCREEN} from '../../navigation/screenNames';
 import {isLoadingAction} from '../../actions/isLoadingAction';
 import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
 import FlexHelpers from 'react-native-flex-helper';
+import {Colors} from '../../styles';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -100,10 +101,10 @@ const LoginForm = () => {
 
 const styles = FlexHelpers.create({
   loginBtnStyle: {
-    backgroundColor: '#34a7c7',
+    backgroundColor: Colors.lightBlue,
   },
   signupBtnStyle: {
-    backgroundColor: '#153e9f',
+    backgroundColor: Colors.darkBlue,
   },
   txt: {
     fontSize: 17,
@@ -114,10 +115,10 @@ const styles = FlexHelpers.create({
   },
   passwordShowStyle: {
     right: 40,
-    color: 'black',
+    color: Colors.black,
   },
   errMsg: {
-    color: '#ed2b2b',
+    color: Colors.red,
   },
 });
 

@@ -5,6 +5,7 @@ import FlexHelpers from 'react-native-flex-helper';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import Logo from '../../components/Logo/Logo';
 import {backgroundImage} from '../../constants/constants';
+import {Colors} from '../../styles';
 
 const Login = () => {
   return (
@@ -19,7 +20,7 @@ const Login = () => {
 
 const styles = FlexHelpers.create({
   loginContainer: {
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
   },
 });
 

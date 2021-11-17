@@ -5,12 +5,13 @@ import SignupFormFirst from '../singupformfirst/SignupFormFirst';
 import GoBack from '../../components/GoBack/GoBack';
 import {backgroundImage} from '../../constants/constants';
 import FlexHelpers from 'react-native-flex-helper';
+import {Colors} from '../../styles';
 
 const SingUp = () => {
   return (
     <View style={styles.fill}>
       <ImageBackground style={styles.fill} source={{uri: backgroundImage}}>
-        <GoBack size={30} color="white" backBtn={styles.backBtn} />
+        <GoBack size={30} color={Colors.white} backBtn={styles.backBtn} />
         <SignupFormFirst />
       </ImageBackground>
     </View>
@@ -19,7 +20,7 @@ const SingUp = () => {
 
 const styles = FlexHelpers.create({
   signupContainer: {
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
   },
   leftBtn: {
     padding: 15,
