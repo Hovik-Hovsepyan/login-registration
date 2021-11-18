@@ -5,12 +5,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StackNavigatorHome, StackNavigatorRegistration} from './navigation';
 
 import AsyncStorageService from '../services/asyncStorage/asyncStorage';
-
-import {isUserLoggedAction} from '../actions/isUserLoggedAction';
+import {isUserLoggedAction} from '../actions/appActions';
 
 export const AppNavigation = () => {
   const dispatch = useDispatch();
-  const isLogged = useSelector(state => state.UserLoggedReducer.isUserLogged);
+  const isLogged = useSelector(state => state.AppReducers.isUserLogged);
 
   useEffect(() => {
     AsyncStorageService.getToken().then(token => {

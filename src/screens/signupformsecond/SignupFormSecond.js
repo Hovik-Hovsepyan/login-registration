@@ -9,8 +9,7 @@ import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
 import {backgroundImage, baseUrl} from '../../constants/constants';
 import {Colors} from '../../styles';
 
-import {isLoadingAction} from '../../actions/isLoadingAction';
-import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
+import {isLoadingAction, isUserLoggedAction} from '../../actions/appActions';
 
 import {
   emailChecker,
@@ -21,12 +20,14 @@ import {
 import Input from '../../components/ui/Input/Input';
 import GoBack from '../../components/ui/GoBack/GoBack';
 import AppButton from '../../components/ui/AppButton/AppButton';
-import PasswordShow from '../../components/ui/Input/PasswordShow/PasswordShow';
 
 const signUpUrl = `${baseUrl}/auth/register`;
 
 const SignupFormSecond = () => {
-  const firstPageData = useSelector(state => state.SignUpDataCollector);
+  const firstPageData = useSelector(
+    state => state.SignUpDataCollector.firstPageData,
+  );
+
   const dispatch = useDispatch();
 
   const emailRef = useRef('');
@@ -34,8 +35,6 @@ const SignupFormSecond = () => {
   const passwordRef = useRef('');
   const password_confirmRef = useRef('');
 
-  const [show, setShow] = useState('eye-off');
-  const [showConfirm, setShowConfirm] = useState('eye-off');
   const [emailValidation, setEmailValidation] = useState('');
   const [passwordValidation, setPasswordValidation] = useState('');
   const [passwordsMatchValidation, setPasswordsMatchValidation] = useState('');
@@ -105,13 +104,7 @@ const SignupFormSecond = () => {
             <Input
               changeRef={passwordRef}
               placeholder="Password"
-              secureTextEntry={showConfirm}
-            />
-            <PasswordShow
-              size={30}
-              passwordShowStyle={styles.passwordShowStyle}
-              show={showConfirm}
-              setShow={setShowConfirm}
+              isPassword={true}
             />
           </View>
           <Text style={styles.errMsg}>{passwordValidation}</Text>
@@ -121,13 +114,7 @@ const SignupFormSecond = () => {
             <Input
               changeRef={password_confirmRef}
               placeholder="Confirm password"
-              secureTextEntry={show}
-            />
-            <PasswordShow
-              size={30}
-              passwordShowStyle={[styles.relative, styles.passwordShowStyle]}
-              show={show}
-              setShow={setShow}
+              isPassword={true}
             />
           </View>
           <Text style={styles.errMsg}>

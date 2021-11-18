@@ -6,11 +6,11 @@ import {useSelector} from 'react-redux';
 import Overlay from '../Overlay/Overlay';
 
 const AppContainer = ({children}) => {
-  const isLoading = useSelector(state => state);
+  const isLoading = useSelector(state => state.AppReducers.isLoading);
   return (
     <View style={styles.fill}>
       {children}
-      {isLoading.IsLoadingReducer && <Overlay size="large" />}
+      {isLoading && <Overlay size="large" />}
     </View>
   );
 };

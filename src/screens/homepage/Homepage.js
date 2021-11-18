@@ -8,10 +8,8 @@ import {baseUrl} from '../../constants/constants';
 import {Colors} from '../../styles';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
 
-import {isLoadingAction} from '../../actions/isLoadingAction';
-import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
-
 import AppButton from '../../components/ui/AppButton/AppButton';
+import {isLoadingAction, isUserLoggedAction} from '../../actions/appActions';
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;

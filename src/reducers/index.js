@@ -1,9 +1,7 @@
-import {IsLoadingReducer} from './IsLoadingReducer';
-import {UserLoggedReducer} from './UserLoggedReducer';
+import {AppReducers} from './appReducers';
 import {SignUpDataCollector} from './SignUpDataCollector';
 
 export const combinedReducers = {
-  IsLoadingReducer,
-  UserLoggedReducer,
+  AppReducers,
   SignUpDataCollector,
 };

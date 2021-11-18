@@ -12,10 +12,8 @@ import {passwordChecker} from '../../helpers/validation';
 import Input from '../ui/Input/Input';
 import AppButton from '../ui/AppButton/AppButton';
 import {baseUrl} from '../../constants/constants';
-import PasswordShow from '../ui/Input/PasswordShow/PasswordShow';
 import {SIGNUP_SCREEN} from '../../navigation/screenNames';
-import {isLoadingAction} from '../../actions/isLoadingAction';
-import {isUserLoggedAction} from '../../actions/isUserLoggedAction';
+import {isLoadingAction, isUserLoggedAction} from '../../actions/appActions';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -70,13 +68,7 @@ const LoginForm = () => {
           changeRef={passwordRef}
           secureTextEntry={show}
           inpStyle={styles.inpStyle}
-        />
-
-        <PasswordShow
-          size={30}
-          passwordShowStyle={[styles.relative, styles.passwordShowStyle]}
-          show={show}
-          setShow={setShow}
+          isPassword={true}
         />
       </View>
 
