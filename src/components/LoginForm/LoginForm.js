@@ -2,18 +2,18 @@ import React, {useCallback, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import FlexHelpers from 'react-native-flex-helper';
 
 import axios from 'axios';
 import AsyncStorageService from '../../services/asyncStorage/asyncStorage';
-import {Colors} from '../../styles';
 
 import {passwordChecker} from '../../helpers/validation';
 import Input from '../ui/Input/Input';
-import AppButton from '../ui/AppButton/AppButton';
 import {baseUrl} from '../../constants/constants';
 import {SIGNUP_SCREEN} from '../../navigation/screenNames';
 import {isLoadingAction, isUserLoggedAction} from '../../actions/appActions';
+import AppButton from '../ui/AppButton/AppButton';
+import FlexHelpers from 'react-native-flex-helper';
+import {Colors} from '../../styles';
 
 const loginUrl = `${baseUrl}/auth/login`;
 
@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const usernameRef = useRef('');
   const passwordRef = useRef('');
-  const [show, setShow] = useState('eye-off');
+  const [show] = useState('eye-off');
   const [passwordValidation, setPasswordValidation] = useState('');
 
   const login = useCallback(async () => {

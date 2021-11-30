@@ -6,6 +6,7 @@ import {StackNavigatorHome, StackNavigatorRegistration} from './navigation';
 
 import AsyncStorageService from '../services/asyncStorage/asyncStorage';
 import {isUserLoggedAction} from '../actions/appActions';
+import SplashScreen from 'react-native-splash-screen';
 
 export const AppNavigation = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export const AppNavigation = () => {
       if (token) {
         dispatch(isUserLoggedAction(true));
       }
+      SplashScreen.hide();
     });
   }, []);
 
