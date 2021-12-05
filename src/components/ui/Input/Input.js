@@ -5,16 +5,28 @@ import FlexHelpers from 'react-native-flex-helper';
 import {Colors} from '../../../styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Input = ({placeholder, inpStyle, changeRef, isPassword}) => {
+const Input = ({
+  placeholder,
+  inpStyle,
+  changeRef,
+  isPassword,
+  parentState,
+  setParentState,
+}) => {
   const [value, setValue] = useState('');
   const [show, setShow] = useState(isPassword);
 
   const inputChange = useCallback(
     val => {
       setValue(val);
-      changeRef.current = val;
+      if (changeRef) {
+        changeRef.current = val;
+      }
+      if (typeof parentState !== undefined) {
+        setParentState(val);
+      }
     },
-    [changeRef],
+    [changeRef, parentState, setParentState],
   );
 
   const showHide = useCallback(() => {

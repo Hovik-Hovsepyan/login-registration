@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, PermissionsAndroid, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import FlexHelpers from 'react-native-flex-helper';
@@ -12,11 +12,15 @@ import {isLoadingAction, isUserLoggedAction} from '../../actions/appActions';
 import {setContactsAction} from '../../actions/getContactsAction';
 import ContactCard from '../../components/ui/ContactCard/ContactCard';
 import AppButton from '../../components/ui/AppButton/AppButton';
+import Input from '../../components/ui/Input/Input';
 
 const Homepage = () => {
   const logOutUrl = `${baseUrl}/auth/logout`;
 
   const dispatch = useDispatch();
+
+  const [searchText, setSearchText] = useState('');
+  const [contactsData, setContactsData] = useState([]);
 
   const contacts = useSelector(state => state.contactsReducer.contacts);
 
@@ -67,6 +71,7 @@ const Homepage = () => {
                   thumbnailPath: contact.thumbnailPath && contact.thumbnailPath,
                 });
               });
+              setContactsData(contactsArr);
               dispatch(setContactsAction(contactsArr));
               dispatch(isLoadingAction(false));
             })
@@ -94,29 +99,46 @@ const Homepage = () => {
     );
   };
 
+  useEffect(() => {
+    const filteredContacts = contacts?.filter?.(el => {
+      return el.name?.toLowerCase().startsWith(searchText.toLowerCase());
+    });
+    setContactsData(filteredContacts);
+  }, [searchText]);
+
   return (
     <View style={styles.fill}>
+      <View style={styles.rowCenter}>
+        <Input
+          placeholder="Search contact"
+          parentState={searchText}
+          setParentState={setSearchText}
+        />
+      </View>
       <FlatList
-        data={contacts}
+        data={contactsData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      <AppButton
-        btnText="Log out"
-        pressHandler={logOut}
-        btnStyle={[styles.logOut, styles.crossCenter]}
-      />
+      <View style={styles.rowCenter}>
+        <AppButton
+          btnText="Log out"
+          pressHandler={logOut}
+          btnStyle={[styles.logOut]}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = FlexHelpers.create({
   logOut: {
-    backgroundColor: Colors.yellow,
+    backgroundColor: Colors.black,
   },
   getContactsBtnStyle: {
     backgroundColor: Colors.black,
   },
+  searchInp: {},
 });
 
 export default Homepage;
