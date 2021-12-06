@@ -67,7 +67,6 @@ const Homepage = () => {
                   phone:
                     contact?.phoneNumbers[0] !== undefined &&
                     contact?.phoneNumbers[0]?.number,
-                  id: contact?.recordID,
                   thumbnailPath: contact.thumbnailPath && contact.thumbnailPath,
                 });
               });
@@ -101,10 +100,21 @@ const Homepage = () => {
 
   useEffect(() => {
     const filteredContacts = contacts?.filter?.(el => {
-      return el.name?.toLowerCase().startsWith(searchText.toLowerCase());
+      return el.name?.toLowerCase()?.includes(searchText?.toLowerCase());
     });
+
+    for (let i = 0; i < filteredContacts.length; i++) {
+      if (
+        filteredContacts[i]?.name
+          ?.toLowerCase()
+          ?.startsWith(searchText?.toLowerCase())
+      ) {
+        const item = filteredContacts?.splice(i, 1);
+        filteredContacts?.unshift(...item);
+      }
+    }
     setContactsData(filteredContacts);
-  }, [searchText]);
+  }, [searchText, contacts]);
 
   return (
     <View style={styles.fill}>
@@ -118,7 +128,7 @@ const Homepage = () => {
       <FlatList
         data={contactsData}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => index}
       />
       <View style={styles.rowCenter}>
         <AppButton
