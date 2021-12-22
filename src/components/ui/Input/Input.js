@@ -22,7 +22,7 @@ const Input = ({
       if (changeRef) {
         changeRef.current = val;
       }
-      if (parentState !== undefined) {
+      if (typeof parentState !== undefined) {
         setParentState(val);
       }
     },
